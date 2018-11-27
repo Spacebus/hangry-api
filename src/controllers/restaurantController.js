@@ -1,5 +1,9 @@
-const db = require('../database')
+const mongo = require('../database')
 exports.get_all_restaurants = (req, res, next) => {
-    db.collections('Restaurant');
-    res.status(201).send('Requisição recebida com sucesso!');
+    mongo.connect(async function(err){
+        if (err) throw err;
+        let db = mongo.conn.db('hangry-test')
+        let restaurants = await db.collection('Restaurant').findOne();
+        res.status(201).send(restaurants);
+    });
 };

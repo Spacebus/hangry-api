@@ -1,12 +1,9 @@
-const MongoClient = require('mongodb').MongoClient;
+var mclient = require('mongodb').MongoClient;
+var dburl = 'mongodb://hangry:hangry123@ds145951.mlab.com:45951/hangry-test';
 
-MongoClient.connect('mongodb://hangry:hangry123@ds145951.mlab.com:45951/hangry-test', { useNewUrlParser: true }, function(err, client) {
-  if(err) {
-    consolerr.log(err)
-    throw {error:'Database connection failed'}
-  }
-
-  db = client.db('hangry-test');
-
-  module.exports = db
-});
+module.exports.connect = function connect(callback) {
+    mclient.connect(dburl, { useNewUrlParser: true }, function(err, conn,){
+        module.exports.conn = conn;
+        callback(err);
+    });
+};
