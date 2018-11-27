@@ -3,6 +3,6 @@ mongoose.connect("mongodb://hangry:hangry123@ds145951.mlab.com:45951/hangry-test
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
-  console.info("[MongoDB] Connected!");
+  cconsole.info('Connection with database succeeded.');
 });
-
+exports.db=db;
