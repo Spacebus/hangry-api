@@ -11,5 +11,5 @@ if (port >= 0) {
 return false;
 }
 app.listen(port, function () {
-    console.info(`app listening on port ${port}`)
+    console.info(`[SERVER] Iniatialized on port ${port}!`)
 })
