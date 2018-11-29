@@ -1,6 +1,22 @@
 const assert = require('assert')
 const mongo = require('../database')
-exports.get_all_restaurants = (req, res, next) => {
+
+exports.addRestaurant = (req, res, next) => {
+    let name = req.body.name;
+    let phone = req.body.phoen;
+    let address = req.body.address;
+    let description = req.body.description;
+    mongo.connect(async function(err){
+        if (err) throw err;
+        let db = mongo.conn.db('hangry-test');
+        let collection = await db.collection('Restaurant');
+        let Restaurant = {'name': name, 'phone': phone, 'address': address, 'description': description};
+        collection.insertOne(Restaurant);
+        res.status(201).send('Restaurante criado com sucesso!');
+    });
+};
+
+exports.getAllRestaurants = (req, res, next) => {
     mongo.connect(async function(err){
         if (err) throw err;
         let db = mongo.conn.db('hangry-test')
@@ -11,13 +27,13 @@ exports.get_all_restaurants = (req, res, next) => {
         })
     });
 };
-exports.get_all_meals_from_a_restaurant = (req, res, next) => {
-    let id = req.params.restaurant_id
+exports.getALlMealsFromTheRestaurant = (req, res, next) => {
+    let id = req.params.restaurantId
     mongo.connect(async function(err){
         if (err) throw err;
         let db = mongo.conn.db('hangry-test')
         let collection = await db.collection('Meal');
-        let query = {'restaurant_id': id};
+        let query = {'restaurantId': id};
         collection.find(query).toArray(await function (err, docs){
             res.status(201).send(docs);
         })

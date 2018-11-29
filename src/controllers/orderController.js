@@ -6,7 +6,7 @@ exports.addItemToOrder = (req, res, next) => {
         if (err) throw err;
         let db = mongo.conn.db('hangry-test');
         let collection = await db.collection('OrderItem');
-        let orderItem = {'order_id': orderId, 'meal_id': mealId};
+        let orderItem = {'orderId': orderId, 'mealId': mealId};
         collection.insertOne(orderItem, function(err, docs){
             res.status(201).send(docs);
         });
