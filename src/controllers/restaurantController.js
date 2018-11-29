@@ -1,4 +1,3 @@
-const assert = require('assert')
 const mongo = require('../database')
 
 exports.addRestaurant = (req, res, next) => {
