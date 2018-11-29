@@ -12,7 +12,7 @@ exports.addRestaurant = (req, res, next) => {
         let collection = await db.collection('Restaurant');
         let Restaurant = {'name': name, 'phone': phone, 'address': address, 'description': description};
         collection.insertOne(Restaurant);
-        res.status(201).send('Restaurante criado com sucesso!');
+        res.status(201).send('Restaurante adicionado com sucesso!');
     });
 };
 
@@ -27,6 +27,7 @@ exports.getAllRestaurants = (req, res, next) => {
         })
     });
 };
+
 exports.getALlMealsFromTheRestaurant = (req, res, next) => {
     let id = req.params.restaurantId
     mongo.connect(async function(err){
