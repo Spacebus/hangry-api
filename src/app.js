@@ -11,5 +11,5 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use('/', index);
 app.use('/restaurant', restaurantRoute);
 app.use('/order', orderRoute);
-app.use('/meal', )
+app.use('/meal', mealRoute);
 module.exports = app;
