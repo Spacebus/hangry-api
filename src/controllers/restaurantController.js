@@ -1,18 +1,19 @@
-const mongo = require('../database')
+const mongo = require('../database');
+var ObjectId = require('mongodb').ObjectID;
 
 exports.addRestaurant = (req, res, next) => {
-    let name = req.body.name;
-    let address = req.body.address;
-    let imageURL = req.body.imageURL;
-    let phone = req.body.phoen;
-    let description = req.body.description;
-    let distance = req.body.distance;
-    let category = req.body.category;
+    let restaurant_name = req.body.name;
+    let restaurant_address = req.body.address;
+    let restaurant_imageURL = req.body.imageURL;
+    let restaurant_phone = req.body.phoen;
+    let restaurant_description = req.body.description;
+    let restaurant_distance = req.body.distance;
+    let restaurant_category = req.body.category;
     mongo.connect(async function(err){
         if (err) throw err;
         let db = mongo.conn.db('hangry-test');
         let collection = await db.collection('Restaurant');
-        let Restaurant = {'name': name, 'address': address, 'imageURL': imageURL ,'phone': phone, 'description': description, 'distance': distance, 'category': category};
+        let Restaurant = {name: restaurant_name, address: restaurant_address, imageURL: restaurant_imageURL ,phone: restaurant_phone, description: restaurant_description, distance: restaurant_distance, category: restaurant_category};
         collection.insertOne(Restaurant);
         res.status(201).send('Restaurante adicionado com sucesso!');
     });
@@ -24,13 +25,13 @@ exports.updateRestaurant = (req, res, next) => {
         if (err) throw err;
         let db = mongo.conn.db('hangry-test');
         let collection = await db.collection('Restaurant');
-        let query = {'restaurantId': id};
+        let query = {"_id": ObjectId(id)};
         collection.updateOne(
             query,
-            {
-                    $set: JSON.parse(JSON.stringify(req.body))
+            {$set:
+                req.body
             }
-        );
+        )
         res.status(201).send('Restaurante atualizado com sucesso!');
     });
 };
