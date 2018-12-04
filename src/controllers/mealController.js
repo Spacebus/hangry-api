@@ -6,7 +6,7 @@ exports.addMeal = (req, res, next) => {
     let price = req.body.price;
     let description = req.body.description;
     let image = req.body.image;
-    let multiplier = req.body.multiplier;
+    let multiplier = req.body.multiplier | 1;
     mongo.connect(async function(err){
         if (err) throw err;
         let db = mongo.conn.db('hangry-test');
