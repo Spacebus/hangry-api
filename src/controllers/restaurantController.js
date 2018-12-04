@@ -6,11 +6,13 @@ exports.addRestaurant = (req, res, next) => {
     let imageURL = req.body.image;
     let phone = req.body.phoen;
     let description = req.body.description;
+    let distance = req.body.distance;
+    let category = req.body.category;
     mongo.connect(async function(err){
         if (err) throw err;
         let db = mongo.conn.db('hangry-test');
         let collection = await db.collection('Restaurant');
-        let Restaurant = {'name': name, 'address': address, 'imageURL': imageURL ,'phone': phone, 'description': description};
+        let Restaurant = {'name': name, 'address': address, 'imageURL': imageURL ,'phone': phone, 'description': description, 'distance': distance, 'category': category};
         collection.insertOne(Restaurant);
         res.status(201).send('Restaurante adicionado com sucesso!');
     });
