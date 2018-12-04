@@ -1,4 +1,5 @@
 const mongo = require('../database')
+var ObjectId = require('mongodb').ObjectID;
 
 exports.addMeal = (req, res, next) => {
     let restaurantId = req.body.restaurantId;
@@ -23,7 +24,7 @@ exports.updateMeal = (req, res, next) => {
         if (err) throw err;
         let db = mongo.conn.db('hangry-test')
         let collection = await db.collection('Meal');
-        let query = {'_id': id};
+        let query = {"_id": ObjectId(id)};
         collection.updateOne(
             query,
             {$set:
