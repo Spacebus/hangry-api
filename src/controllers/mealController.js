@@ -27,10 +27,11 @@ exports.updateMeal = (req, res, next) => {
         let obj = req.body;
         collection.update(
             query,
-            {
+            {$set:{
                 obj
-            }
-        ).status(201).send('Refeição alterada com sucesso!');
+            }}
+        )
+        res.status(201).send('Refeição alterada com sucesso!');
     });
 };
 
@@ -42,9 +43,10 @@ exports.updateAllMeals = (req, res, next) => {
         let multiplier = req.body.multiplier;
         collection.updateMany(
             {},
-            {
+            {$set: {
                 'multiplier': multiplier
-            }
-        ).status(201).send('Refeições alteradas com sucesso!');
+            }}
+        )
+        res.status(201).send('Refeições alteradas com sucesso!');
     });
 };
