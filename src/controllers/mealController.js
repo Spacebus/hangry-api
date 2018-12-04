@@ -23,11 +23,11 @@ exports.updateMeal = (req, res, next) => {
         if (err) throw err;
         let db = mongo.conn.db('hangry-test')
         let collection = await db.collection('Meal');
-        let query = {'mealId': id};
+        let query = {'_id': id};
         collection.updateOne(
             query,
             {$set:
-                JSON.parse(JSON.stringify(req.body))
+                req.body
             }
         )
         res.status(201).send('Refeição alterada com sucesso!');
