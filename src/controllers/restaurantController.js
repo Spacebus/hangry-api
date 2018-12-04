@@ -28,7 +28,7 @@ exports.updateRestaurant = (req, res, next) => {
         collection.updateOne(
             query,
             {
-                    $set: JSON.stringify(req.body)
+                    $set: JSON.parse(JSON.stringify(req.body))
             }
         );
         res.status(201).send('Restaurante atualizado com sucesso!');
