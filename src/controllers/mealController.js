@@ -16,3 +16,35 @@ exports.addMeal = (req, res, next) => {
         res.status(201).send('Refeição adicionada com sucesso!');
     });
 };
+
+exports.updateMeal = (req, res, next) => {
+    let id = req.params.mealId;
+    mongo.connect(async function(err){
+        if (err) throw err;
+        let db = mongo.conn.db('hangry-test')
+        let collection = await db.collection('Meal');
+        let query = {'mealId': id};
+        let obj = req.body;
+        collection.update(
+            query,
+            {
+                obj
+            }
+        ).status(201).send('Refeição alterada com sucesso!');
+    });
+};
+
+exports.updateAllMeals = (req, res, next) => {
+    mongo.connect(async function(err){
+        if (err) throw err;
+        let db = mongo.conn.db('hangry-test')
+        let collection = await db.collection('Meal');
+        let multiplier = req.body.multiplier;
+        collection.updateMany(
+            {},
+            {
+                'multiplier': multiplier
+            }
+        ).status(201).send('Refeições alteradas com sucesso!');
+    });
+};
