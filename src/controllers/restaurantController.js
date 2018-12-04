@@ -16,6 +16,24 @@ exports.addRestaurant = (req, res, next) => {
     });
 };
 
+exports.updateRestaurant = (req, res, next) => {
+    let id = req.params.restaurantId;
+    mongo.connect(async function(err){
+        if (err) throw err;
+        let db = mongo.conn.db('hangry-test');
+        let collection = await db.collection('Restaurant');
+        let query = {'restaurantId': id};
+        let obj = req.body;
+        collection.update(
+            query,
+            {
+                    obj
+            }
+        );
+        res.status(201).send('Restaurante atualizado com sucesso!');
+    });
+};
+
 exports.getAllRestaurants = (req, res, next) => {
     mongo.connect(async function(err){
         if (err) throw err;
