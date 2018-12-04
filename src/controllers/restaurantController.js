@@ -25,11 +25,10 @@ exports.updateRestaurant = (req, res, next) => {
         let db = mongo.conn.db('hangry-test');
         let collection = await db.collection('Restaurant');
         let query = {'restaurantId': id};
-        let obj = req.body;
         collection.update(
             query,
             {
-                    $set: obj
+                    $set: req.body
             }
         );
         res.status(201).send('Restaurante atualizado com sucesso!');
