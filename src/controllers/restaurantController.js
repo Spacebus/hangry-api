@@ -3,7 +3,7 @@ const mongo = require('../database')
 exports.addRestaurant = (req, res, next) => {
     let name = req.body.name;
     let address = req.body.address;
-    let imageURL = req.body.image;
+    let imageURL = req.body.imageURL;
     let phone = req.body.phoen;
     let description = req.body.description;
     let distance = req.body.distance;
