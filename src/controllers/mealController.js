@@ -5,11 +5,12 @@ exports.addMeal = (req, res, next) => {
     let name = req.body.name;
     let price = req.body.price;
     let description = req.body.description;
+    let image = req.body.image;
     mongo.connect(async function(err){
         if (err) throw err;
         let db = mongo.conn.db('hangry-test');
         let collection = await db.collection('Meal');
-        let Meal = {'restaurantId': restaurantId,'name': name, 'price': price, 'description': description};
+        let Meal = {'restaurantId': restaurantId,'name': name, 'price': price, 'description': description, 'image': image};
         collection.insertOne(Meal);
         res.status(201).send('Refeição adicionada com sucesso!');
     });
