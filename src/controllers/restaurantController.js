@@ -28,7 +28,7 @@ exports.getAllRestaurants = (req, res, next) => {
     });
 };
 
-exports.getALlMealsFromTheRestaurant = (req, res, next) => {
+exports.getAllMealsFromTheRestaurant = (req, res, next) => {
     let id = req.params.restaurantId
     mongo.connect(async function(err){
         if (err) throw err;
