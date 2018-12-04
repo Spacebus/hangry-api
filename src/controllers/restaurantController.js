@@ -29,7 +29,7 @@ exports.updateRestaurant = (req, res, next) => {
         collection.update(
             query,
             {
-                    obj
+                    $set: obj
             }
         );
         res.status(201).send('Restaurante atualizado com sucesso!');
