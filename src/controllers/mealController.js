@@ -24,7 +24,7 @@ exports.updateMeal = (req, res, next) => {
         let db = mongo.conn.db('hangry-test')
         let collection = await db.collection('Meal');
         let query = {'mealId': id};
-        collection.update(
+        collection.updateOne(
             query,
             {$set:
                 req.body
