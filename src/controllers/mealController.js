@@ -2,24 +2,23 @@ const mongo = require('../database')
 var ObjectId = require('mongodb').ObjectID;
 
 exports.addMeal = (req, res, next) => {
-    let restaurantId = req.body.restaurantId;
-    let name = req.body.name;
-    let price = req.body.price;
-    let description = req.body.description;
-    let imageURL = req.body.image;
-    let multiplier = parseInt(req.body.multiplier) || 1;
+    let meal_restaurant_id = req.body.restaurant_id;
+    let meal_name = req.body.name;
+    let meal_price = req.body.price;
+    let meal_description = req.body.description;
+    let meal_image_url = req.body.image;
     mongo.connect(async function(err){
         if (err) throw err;
         let db = mongo.conn.db('hangry-test');
         let collection = await db.collection('Meal');
-        let Meal = {'restaurantId': restaurantId,'name': name, 'price': price, 'description': description, 'imageURL': imageURL, 'multiplier': multiplier};
+        let Meal = {restaurant_id: ObjectId(meal_restaurant_id),name: meal_name, price: meal_price, description: meal_description, image_url: meal_image_url};
         collection.insertOne(Meal);
         res.status(201).send('Refeição adicionada com sucesso!');
     });
 };
 
 exports.updateMeal = (req, res, next) => {
-    let id = req.params.mealId;
+    let id = req.params.id;
     mongo.connect(async function(err){
         if (err) throw err;
         let db = mongo.conn.db('hangry-test')
@@ -32,22 +31,6 @@ exports.updateMeal = (req, res, next) => {
             }
         )
         res.status(201).send('Refeição alterada com sucesso!');
-    });
-};
-
-exports.updateAllMeals = (req, res, next) => {
-    mongo.connect(async function(err){
-        if (err) throw err;
-        let db = mongo.conn.db('hangry-test')
-        let collection = await db.collection('Meal');
-        let multiplier = req.body.multiplier;
-        collection.updateMany(
-            {},
-            {$set: {
-                'multiplier': multiplier
-            }}
-        )
-        res.status(201).send('Refeições alteradas com sucesso!');
     });
 };
 

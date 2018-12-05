@@ -67,7 +67,7 @@ exports.getAllMealsFromTheRestaurant = (req, res, next) => {
         if (err) throw err;
         let db = mongo.conn.db('hangry-test')
         let collection = await db.collection('Meal');
-        let query = {'restaurantId': id};
+        let query = {'restaurant_id': ObjectId(id)};
         collection.find(query).toArray(await function (err, docs){
             res.status(201).send(docs);
         })
@@ -80,7 +80,7 @@ exports.getAllOrdersFromTheRestaurant = (req, res, next) => {
         if (err) throw err;
         let db = mongo.conn.db('hangry-test')
         let collection = await db.collection('Order');
-        let query = {'restaurantId': id};
+        let query = {'restaurant_id': ObjectId(id)};
         collection.find(query).toArray(await function (err, docs){
             res.status(201).send(docs);
         })
@@ -94,7 +94,7 @@ exports.getFinishedOrdersFromTheRestaurant = (req, res, next) => {
         let db = mongo.conn.db('hangry-test')
         let collection = await db.collection('Order');
         let query = {
-            'restaurantId': id,
+            'restaurant_id': ObjectId(id),
             'orderStatus': 'Finalizado'
         };
         collection.find(query).toArray(await function (err, docs){

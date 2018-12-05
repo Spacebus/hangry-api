@@ -2,15 +2,15 @@ const mongo = require('../database')
 const ObjectId = require('mongodb').ObjectID;
 
 exports.addOrder = (req, res, next) => {
-    let order_restaurantId = req.body.restaurantId;
-    let order_scheduledDate = req.body.scheduledDate;
-    let order_orderDate = req.body.orderDate;
-    let order_orderStatus = req.body.orderStatus;
+    let order_restaurant_id = req.body.restaurant_id;
+    let order_scheduled_timestamp = req.body.scheduled_date;
+    let order_order_timestamp = req.body.order_date;
+    let order_status = req.body.order_status;
     mongo.connect(async function(err){
         if (err) throw err;
         let db = mongo.conn.db('hangry-test');
         let collection = await db.collection('Order');
-        let orderItem = {restaurantId: order_restaurantId, scheduledDate: order_scheduledDate, orderDate: order_orderDate, orderStatus: order_orderStatus};
+        let orderItem = {restaurant_id: ObjectId(order_restaurant_id), scheduled_timestamp: order_scheduled_timestamp, order_timestamp: order_order_timestamp, status: order_status};
         collection.insertOne(orderItem);
         res.status(201).send('Pedido adicionado com sucesso!');
     });
@@ -34,14 +34,14 @@ exports.updateOrder = (req, res, next) => {
 };
 
 exports.addItemToOrder = (req, res, next) => {
-    let item_orderId = req.body.orderId;
-    let item_mealId = req.body.mealId;
+    let item_order_id = req.body.order_id;
+    let item_meal_id = req.body.meal_id;
     let item_quantity = req.body.quantity || 1;
     mongo.connect(async function(err){
         if (err) throw err;
         let db = mongo.conn.db('hangry-test');
         let collection = await db.collection('OrderItem');
-        let orderItem = {orderId: item_orderId, mealId: item_mealId, quantity: item_quantity};
+        let orderItem = {order_id: ObjectId(item_order_id), meal_id: ObjectId(item_meal_id), quantity: item_quantity};
         collection.insertOne(orderItem);
         res.status(201).send('Item adicionado com sucesso!');
     });
