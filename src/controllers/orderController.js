@@ -50,7 +50,7 @@ exports.getAllOrders = (req, res, next) => {
     mongo.connect(async function(err){
         if (err) throw err;
         let db = mongo.conn.db('hangry-test')
-        let collection = await db.collection('Orders');
+        let collection = await db.collection('Order');
         let query = {};
         collection.find(query).toArray(await function (err, docs){
             res.status(201).send(docs);
