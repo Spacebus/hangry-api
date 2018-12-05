@@ -83,7 +83,7 @@ exports.getAllOrdersFromTheRestaurant = (req, res, next) => {
     });    
 };
 
-exports.getFinishedOrdersFromTheRestaurant = (req, res, next) => {
+exports.getRestaurantOrders = (req, res, next) => {
     let id = req.params.id
     mongo.connect(async function(err){
         if (err) throw err;
@@ -91,7 +91,7 @@ exports.getFinishedOrdersFromTheRestaurant = (req, res, next) => {
         let collection = await db.collection('Order');
         let query = {
             'restaurant_id': ObjectId(id),
-            'orderStatus': 'Finalizado'
+            'orderStatus': {'$ne': 'Em processo'}
         };
         let orders = await collection.find(query).toArray();
         res.status(200).send(orders);
