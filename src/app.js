@@ -8,8 +8,9 @@ const index = require('./routes/index');
 const restaurantRoute = require('./routes/restaurantRoute');
 const mealRoute = require('./routes/mealRoute')
 const orderRoute = require('./routes/orderRoute');
+const sessionRoute = require('./routes/sessionRoute');
 var date = Date.now();
-var token = (date/3).toString()
+var token = (date/3).toString();
 
 app.use( session({ secret : token, name : 'sessionId', resave : true, saveUninitialized : true}));
 app.use(cors());
@@ -19,4 +20,6 @@ app.use('/', index);
 app.use('/restaurant', restaurantRoute);
 app.use('/order', orderRoute);
 app.use('/meal', mealRoute);
+app.use('/session', sessionRoute);
+
 module.exports = app;

@@ -6,7 +6,6 @@ exports.addOrder = (req, res, next) => {
     let order_scheduled_timestamp = req.body.scheduled_timestamp;
     let order_order_timestamp = req.body.order_timestamp;
     let order_status = req.body.status;
-    let order_session = req.body.session;
     let order_multiplier = req.body.multiplier;
     mongo.connect(async function(err){
         if (err) throw err;
@@ -17,7 +16,7 @@ exports.addOrder = (req, res, next) => {
             scheduled_timestamp: order_scheduled_timestamp, 
             order_timestamp: order_order_timestamp, 
             status: order_status, 
-            session: order_session, 
+            session: req.sessionID, 
             multiplier: order_multiplier};
         collection.insertOne(orderItem);
         res.status(201).send('Pedido adicionado com sucesso!');
