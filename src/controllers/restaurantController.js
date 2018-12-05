@@ -32,7 +32,7 @@ exports.updateRestaurant = (req, res, next) => {
                 req.body
             }
         )
-        res.status(201).send('Restaurante atualizado com sucesso!');
+        res.status(200).send('Restaurante atualizado com sucesso!');
     });
 };
 
@@ -42,9 +42,8 @@ exports.getAllRestaurants = (req, res, next) => {
         let db = mongo.conn.db('hangry-test')
         let collection = await db.collection('Restaurant');
         let query = {};
-        collection.find(query).toArray(await function (err, docs){
-            res.status(201).send(docs);
-        })
+        let restaurants = await collection.find(query).toArray();
+        res.status(200).send(restaurants);
     });
 };
 
@@ -55,9 +54,8 @@ exports.getRestaurant = (req, res, next) => {
         let db = mongo.conn.db('hangry-test')
         let collection = await db.collection('Restaurant');
         let query = {"_id": ObjectId(id)};
-        collection.find(query).toArray(await function (err, docs){
-            res.status(201).send(docs);
-        })
+        let restaurant = await collection.findOne(query);
+        res.status(200).send(restaurant);
     });
 };
 
@@ -68,9 +66,8 @@ exports.getAllMealsFromTheRestaurant = (req, res, next) => {
         let db = mongo.conn.db('hangry-test')
         let collection = await db.collection('Meal');
         let query = {'restaurant_id': ObjectId(id)};
-        collection.find(query).toArray(await function (err, docs){
-            res.status(201).send(docs);
-        })
+        let meals = await collection.find(query).toArray();
+        res.status(200).send(meals);
     });    
 };
 
@@ -81,9 +78,8 @@ exports.getAllOrdersFromTheRestaurant = (req, res, next) => {
         let db = mongo.conn.db('hangry-test')
         let collection = await db.collection('Order');
         let query = {'restaurant_id': ObjectId(id)};
-        collection.find(query).toArray(await function (err, docs){
-            res.status(201).send(docs);
-        })
+        let orders = await collection.find(query).toArray();
+        res.status(200).send(orders);
     });    
 };
 
@@ -97,8 +93,7 @@ exports.getFinishedOrdersFromTheRestaurant = (req, res, next) => {
             'restaurant_id': ObjectId(id),
             'orderStatus': 'Finalizado'
         };
-        collection.find(query).toArray(await function (err, docs){
-            res.status(201).send(docs);
-        })
+        let orders = await collection.find(query).toArray();
+        res.status(200).send(orders);
     });    
 };

@@ -30,7 +30,7 @@ exports.updateMeal = (req, res, next) => {
                 req.body
             }
         )
-        res.status(201).send('Refeição alterada com sucesso!');
+        res.status(200).send('Refeição alterada com sucesso!');
     });
 };
 
@@ -40,8 +40,7 @@ exports.getAllMeals = (req, res, next) => {
         let db = mongo.conn.db('hangry-test')
         let collection = await db.collection('Meal');
         let query = {};
-        collection.find(query).toArray(await function (err, docs){
-            res.status(201).send(docs);
-        })
+        let meals = await collection.find(query).toArray();
+        res.status(200).send(meals);
     });
 };

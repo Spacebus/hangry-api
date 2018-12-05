@@ -37,7 +37,7 @@ exports.updateOrder = (req, res, next) => {
                 req.body
             }
         )
-        res.status(201).send('Pedido atualizado com sucesso!');
+        res.status(200).send('Pedido atualizado com sucesso!');
     });
 };
 
@@ -61,9 +61,8 @@ exports.getAllOrders = (req, res, next) => {
         let db = mongo.conn.db('hangry-test')
         let collection = await db.collection('Order');
         let query = {};
-        collection.find(query).toArray(await function (err, docs){
-            res.status(201).send(docs);
-        });
+        let orders = await collection.find(query).toArray();
+        res.status(200).send(orders);
     });
 };
 
@@ -73,8 +72,26 @@ exports.getAllOrderItens = (req, res, next) => {
         let db = mongo.conn.db('hangry-test')
         let collection = await db.collection('OrderItem');
         let query = {};
-        collection.find(query).toArray(await function (err, docs){
-            res.status(201).send(docs);
+        let orderItens = await collection.find(query).toArray();
+        res.status(200).send(orderItens);
+    });
+};
+
+exports.getAllMealsFromOrder = (req, res, next) => {
+    let order_id = req.params.id;
+    mongo.connect(async function(err){
+        if (err) throw err;
+        let db = mongo.conn.db('hangry-test')
+        let orderItensCollection = await db.collection('OrderItem');
+        let orderItensQuery = {"order_id": ObjectId(order_id)};
+        let orderItens = await orderItensCollection.find(orderItensQuery).toArray();
+        let meal_ids = [];
+        orderItens.forEach(element => {
+            meal_ids.push(ObjectId(element.meal_id));
         });
+        let mealCollection = await db.collection('Meal');
+        let mealsQuery = {"_id": {"$in": meal_ids}};
+        let meals = await mealCollection.find(mealsQuery).toArray();
+        res.status(200).send(meals);
     });
 };
