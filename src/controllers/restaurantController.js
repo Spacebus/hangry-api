@@ -20,7 +20,7 @@ exports.addRestaurant = (req, res, next) => {
 };
 
 exports.updateRestaurant = (req, res, next) => {
-    let id = req.params.restaurantId;
+    let id = req.params.id;
     mongo.connect(async function(err){
         if (err) throw err;
         let db = mongo.conn.db('hangry-test');
@@ -48,8 +48,21 @@ exports.getAllRestaurants = (req, res, next) => {
     });
 };
 
+exports.getRestaurant = (req, res, next) => {
+    let id = req.params.id;
+    mongo.connect(async function(err){
+        if (err) throw err;
+        let db = mongo.conn.db('hangry-test')
+        let collection = await db.collection('Restaurant');
+        let query = {"_id": ObjectId(id)};
+        collection.find(query).toArray(await function (err, docs){
+            res.status(201).send(docs);
+        })
+    });
+};
+
 exports.getAllMealsFromTheRestaurant = (req, res, next) => {
-    let id = req.params.restaurantId
+    let id = req.params.id
     mongo.connect(async function(err){
         if (err) throw err;
         let db = mongo.conn.db('hangry-test')
