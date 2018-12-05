@@ -4,7 +4,7 @@ var ObjectId = require('mongodb').ObjectID;
 exports.addRestaurant = (req, res, next) => {
     let restaurant_name = req.body.name;
     let restaurant_address = req.body.address;
-    let restaurant_imageURL = req.body.imageURL;
+    let restaurant_image_url = req.body.imageURL;
     let restaurant_phone = req.body.phoen;
     let restaurant_description = req.body.description;
     let restaurant_distance = req.body.distance;
@@ -13,7 +13,7 @@ exports.addRestaurant = (req, res, next) => {
         if (err) throw err;
         let db = mongo.conn.db('hangry-test');
         let collection = await db.collection('Restaurant');
-        let Restaurant = {name: restaurant_name, address: restaurant_address, imageURL: restaurant_imageURL ,phone: restaurant_phone, description: restaurant_description, distance: restaurant_distance, category: restaurant_category};
+        let Restaurant = {name: restaurant_name, address: restaurant_address, image_url: restaurant_image_url ,phone: restaurant_phone, description: restaurant_description, distance: restaurant_distance, category: restaurant_category};
         collection.insertOne(Restaurant);
         res.status(201).send('Restaurante adicionado com sucesso!');
     });
