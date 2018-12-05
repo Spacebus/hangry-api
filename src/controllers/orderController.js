@@ -55,7 +55,7 @@ exports.getAllOrders = (req, res, next) => {
         let query = {};
         collection.find(query).toArray(await function (err, docs){
             res.status(201).send(docs);
-        })
+        });
     });
 };
 
@@ -67,6 +67,6 @@ exports.getAllOrderItens = (req, res, next) => {
         let query = {};
         collection.find(query).toArray(await function (err, docs){
             res.status(201).send(docs);
-        })
+        });
     });
 };
