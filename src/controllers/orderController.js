@@ -45,3 +45,15 @@ exports.addItemToOrder = (req, res, next) => {
         res.status(201).send('Item adicionado com sucesso!');
     });
 };
+
+exports.getAllOrders = (req, res, next) => {
+    mongo.connect(async function(err){
+        if (err) throw err;
+        let db = mongo.conn.db('hangry-test')
+        let collection = await db.collection('Orders');
+        let query = {};
+        collection.find(query).toArray(await function (err, docs){
+            res.status(201).send(docs);
+        })
+    });
+};
