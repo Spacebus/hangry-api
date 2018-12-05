@@ -86,3 +86,19 @@ exports.getAllOrdersFromTheRestaurant = (req, res, next) => {
         })
     });    
 };
+
+exports.getFinishedOrdersFromTheRestaurant = (req, res, next) => {
+    let id = req.params.id
+    mongo.connect(async function(err){
+        if (err) throw err;
+        let db = mongo.conn.db('hangry-test')
+        let collection = await db.collection('Order');
+        let query = {
+            'restaurantId': id,
+            'orderStatus': 'Finalizado'
+        };
+        collection.find(query).toArray(await function (err, docs){
+            res.status(201).send(docs);
+        })
+    });    
+};
