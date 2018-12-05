@@ -39,7 +39,7 @@ exports.updateRestaurant = (req, res, next) => {
 exports.getAllRestaurants = (req, res, next) => {
     mongo.connect(async function(err){
         if (err) throw err;
-        let db = mongo.conn.db('hangry-test')
+        let db = mongo.conn.db('hangry-test');
         let collection = await db.collection('Restaurant');
         let query = {};
         let restaurants = await collection.find(query).toArray();
@@ -51,7 +51,7 @@ exports.getRestaurant = (req, res, next) => {
     let id = req.params.id;
     mongo.connect(async function(err){
         if (err) throw err;
-        let db = mongo.conn.db('hangry-test')
+        let db = mongo.conn.db('hangry-test');
         let collection = await db.collection('Restaurant');
         let query = {"_id": ObjectId(id)};
         let restaurant = await collection.findOne(query);
@@ -63,7 +63,7 @@ exports.getAllMealsFromTheRestaurant = (req, res, next) => {
     let id = req.params.id
     mongo.connect(async function(err){
         if (err) throw err;
-        let db = mongo.conn.db('hangry-test')
+        let db = mongo.conn.db('hangry-test');
         let collection = await db.collection('Meal');
         let query = {'restaurant_id': ObjectId(id)};
         let meals = await collection.find(query).toArray();
@@ -75,7 +75,7 @@ exports.getAllOrdersFromTheRestaurant = (req, res, next) => {
     let id = req.params.id
     mongo.connect(async function(err){
         if (err) throw err;
-        let db = mongo.conn.db('hangry-test')
+        let db = mongo.conn.db('hangry-test');
         let collection = await db.collection('Order');
         let query = {'restaurant_id': ObjectId(id)};
         let orders = await collection.find(query).toArray();
@@ -87,7 +87,7 @@ exports.getRestaurantOrders = (req, res, next) => {
     let id = req.params.id
     mongo.connect(async function(err){
         if (err) throw err;
-        let db = mongo.conn.db('hangry-test')
+        let db = mongo.conn.db('hangry-test');
         let collection = await db.collection('Order');
         let query = {
             'restaurant_id': ObjectId(id),
