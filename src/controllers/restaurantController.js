@@ -4,7 +4,7 @@ var ObjectId = require('mongodb').ObjectID;
 exports.addRestaurant = (req, res, next) => {
     let restaurant_name = req.body.name;
     let restaurant_address = req.body.address;
-    let restaurant_image_url = req.body.imageURL;
+    let restaurant_image_url = req.body.image_url;
     let restaurant_phone = req.body.phoen;
     let restaurant_description = req.body.description;
     let restaurant_distance = req.body.distance;
