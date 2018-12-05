@@ -3,14 +3,22 @@ const ObjectId = require('mongodb').ObjectID;
 
 exports.addOrder = (req, res, next) => {
     let order_restaurant_id = req.body.restaurant_id;
-    let order_scheduled_timestamp = req.body.scheduled_date;
-    let order_order_timestamp = req.body.order_date;
-    let order_status = req.body.order_status;
+    let order_scheduled_timestamp = req.body.scheduled_timestamp;
+    let order_order_timestamp = req.body.order_timestamp;
+    let order_status = req.body.status;
+    let order_session = req.body.session;
+    let order_multiplier = req.body.multiplier;
     mongo.connect(async function(err){
         if (err) throw err;
         let db = mongo.conn.db('hangry-test');
         let collection = await db.collection('Order');
-        let orderItem = {restaurant_id: ObjectId(order_restaurant_id), scheduled_timestamp: order_scheduled_timestamp, order_timestamp: order_order_timestamp, status: order_status};
+        let orderItem = {
+            restaurant_id: ObjectId(order_restaurant_id), 
+            scheduled_timestamp: order_scheduled_timestamp, 
+            order_timestamp: order_order_timestamp, 
+            status: order_status, 
+            session: order_session, 
+            multiplier: order_multiplier};
         collection.insertOne(orderItem);
         res.status(201).send('Pedido adicionado com sucesso!');
     });
