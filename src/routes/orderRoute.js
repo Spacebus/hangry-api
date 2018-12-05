@@ -6,4 +6,5 @@ router.get('/:id/getAllMealsFromOrder', controller.getAllMealsFromOrder);
 router.post('/', controller.addOrder);
 router.get('/item', controller.getAllOrderItens);
 router.post('/item', controller.addItemToOrder);
+router.delete('/:id/deleteItem', controller.deleteOrderItem);
 module.exports = router;

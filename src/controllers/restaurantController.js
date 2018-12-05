@@ -91,7 +91,7 @@ exports.getRestaurantOrders = (req, res, next) => {
         let collection = await db.collection('Order');
         let query = {
             'restaurant_id': ObjectId(id),
-            'orderStatus': {'$ne': 'Em processo'}
+            'status': {'$ne': 'Em processo'}
         };
         let orders = await collection.find(query).toArray();
         res.status(200).send(orders);

@@ -57,7 +57,7 @@ exports.addItemToOrder = (req, res, next) => {
 exports.getAllOrders = (req, res, next) => {
     mongo.connect(async function(err){
         if (err) throw err;
-        let db = mongo.conn.db('hangry-test')
+        let db = mongo.conn.db('hangry-test');
         let collection = await db.collection('Order');
         let query = {};
         let orders = await collection.find(query).toArray();
@@ -68,7 +68,7 @@ exports.getAllOrders = (req, res, next) => {
 exports.getAllOrderItens = (req, res, next) => {
     mongo.connect(async function(err){
         if (err) throw err;
-        let db = mongo.conn.db('hangry-test')
+        let db = mongo.conn.db('hangry-test');
         let collection = await db.collection('OrderItem');
         let query = {};
         let orderItens = await collection.find(query).toArray();
@@ -80,7 +80,7 @@ exports.getAllMealsFromOrder = (req, res, next) => {
     let order_id = req.params.id;
     mongo.connect(async function(err){
         if (err) throw err;
-        let db = mongo.conn.db('hangry-test')
+        let db = mongo.conn.db('hangry-test');
         let orderItensCollection = await db.collection('OrderItem');
         let orderItensQuery = {"order_id": ObjectId(order_id)};
         let orderItens = await orderItensCollection.find(orderItensQuery).toArray();
@@ -92,5 +92,17 @@ exports.getAllMealsFromOrder = (req, res, next) => {
         let mealsQuery = {"_id": {"$in": meal_ids}};
         let meals = await mealCollection.find(mealsQuery).toArray();
         res.status(200).send(meals);
+    });
+};
+
+exports.deleteOrderItem = (req, res, next) => {
+    let id = req.params.id;
+    mongo.connect(async function(err){
+        if (err) throw err;
+        let db = mongo.conn.db('hangry-test');
+        let collection = await db.collection('OrderItem');
+        let query = {'_id': ObjectId(id)};
+        let orderItens = await collection.deleteOne(query);
+        res.status(204).send('Item deletado com sucesso');
     });
 };
