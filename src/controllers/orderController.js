@@ -1,4 +1,5 @@
 const mongo = require('../database')
+const ObjectId = require('mongodb').ObjectID;
 
 exports.addOrder = (req, res, next) => {
     let restaurantId = req.body.restaurantId;
@@ -12,6 +13,23 @@ exports.addOrder = (req, res, next) => {
         let orderItem = {'restaurantId': restaurantId, 'scheduledDate': scheduledDate, "orderDate": orderDate, "orderStatus": orderStatus};
         collection.insertOne(orderItem);
         res.status(201).send('Pedido adicionado com sucesso!');
+    });
+};
+
+exports.updateOrder = (req, res, next) => {
+    let id = req.params.id;
+    mongo.connect(async function(err){
+        if (err) throw err;
+        let db = mongo.conn.db('hangry-test');
+        let collection = await db.collection('Order');
+        let query = {"_id": ObjectId(id)};
+        collection.updateOne(
+            query,
+            {$set:
+                req.body
+            }
+        )
+        res.status(201).send('Pedido atualizado com sucesso!');
     });
 };
 
