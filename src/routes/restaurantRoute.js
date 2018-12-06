@@ -7,5 +7,5 @@ router.put('/:id', controller.updateRestaurant);
 router.post('/', controller.addRestaurant);
 router.get('/:id/getMeals', controller.getAllMealsFromTheRestaurant);
 router.get('/:id/getOrders', controller.getAllOrdersFromTheRestaurant);
-router.get('/:id/getRestaurantOrders', controller.getRestaurantOrders);
+router.get('/:id/getFilteredOrders', controller.getAllOrdersFromRestaurantWithoutOneStatus);
 module.exports = router;
