@@ -79,7 +79,7 @@ exports.getRestaurant = (req, res, next) => {
 };
 
 exports.getAllMealsFromRestaurant = (req, res, next) => {
-    let id = req.params.id
+    let id = req.params.id;
     mongo.connect(async function(err){
         if (err) throw err;
         let db = mongo.conn.db('hangry-test');
@@ -91,7 +91,7 @@ exports.getAllMealsFromRestaurant = (req, res, next) => {
 };
 
 exports.getAllOrdersFromRestaurant = (req, res, next) => {
-    let id = req.params.id
+    let id = req.params.id;
     mongo.connect(async function(err){
         if (err) throw err;
         let db = mongo.conn.db('hangry-test');
@@ -103,7 +103,7 @@ exports.getAllOrdersFromRestaurant = (req, res, next) => {
 };
 
 exports.getAllOrdersFromRestaurantWithoutOneStatus = (req, res, next) => {
-    let id = req.params.id
+    let id = req.params.id;
     mongo.connect(async function(err){
         if (err) throw err;
         let db = mongo.conn.db('hangry-test');
