@@ -5,7 +5,7 @@ exports.addRestaurant = (req, res, next) => {
     let restaurant_name = req.body.name;
     let restaurant_address = req.body.address;
     let restaurant_image_url = req.body.image_url;
-    let restaurant_phone = req.body.phoen;
+    let restaurant_phone = req.body.phone;
     let restaurant_description = req.body.description;
     let restaurant_distance = req.body.distance;
     let restaurant_category = req.body.category;
@@ -24,6 +24,17 @@ exports.addRestaurant = (req, res, next) => {
         };
         collection.insertOne(Restaurant);
         res.status(201).send('Restaurante adicionado com sucesso!');
+    });
+};
+
+exports.addRestaurants = (req, res, next) => {
+    let restaurants = req.body.restaurants;
+    mongo.connect(async function(err){
+        if (err) throw err;
+        let db = mongo.conn.db('hangry-test');
+        let collection = await db.collection('Restaurant');
+        restaurants = await collection.insert(restaurants);
+        res.status(201).send(restaurants.ops);
     });
 };
 

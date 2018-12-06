@@ -25,6 +25,17 @@ exports.addMeal = (req, res, next) => {
     });
 };
 
+exports.addMeals = (req, res, next) => {
+    let meals = req.body.meals;
+    mongo.connect(async function(err){
+        if (err) throw err;
+        let db = mongo.conn.db('hangry-test');
+        let collection = await db.collection('Meal');
+        meals = await collection.insert(meals);
+        res.status(201).send(meals.ops);
+    });
+};
+
 exports.updateMeal = (req, res, next) => {
     let id = req.params.id;
     mongo.connect(async function(err){
