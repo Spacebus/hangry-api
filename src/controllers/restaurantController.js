@@ -66,6 +66,18 @@ exports.getAllRestaurants = (req, res, next) => {
     });
 };
 
+exports.getShuffleRestaurants = (req, res, next) => {
+    mongo.connect(async function(err){
+        if (err) throw err;
+        let db = mongo.conn.db('hangry-test');
+        let collection = await db.collection('Restaurant');
+        let query = {};
+        let restaurants = await collection.find(query).toArray();
+        restaurants.sort(function() {return .5 - Math.random();});
+        res.status(200).send(restaurants);
+    });
+};
+
 exports.getRestaurant = (req, res, next) => {
     let id = req.params.id;
     mongo.connect(async function(err){
