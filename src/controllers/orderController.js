@@ -6,7 +6,6 @@ exports.addOrder = (req, res, next) => {
     let order_scheduled_timestamp = req.body.scheduled_timestamp;
     let order_order_timestamp = req.body.order_timestamp;
     let order_status = req.body.status;
-    let order_multiplier = req.body.multiplier;
     mongo.connect(async function(err){
         if (err) throw err;
         let db = mongo.conn.db('hangry-test');
@@ -16,8 +15,8 @@ exports.addOrder = (req, res, next) => {
             scheduled_timestamp: order_scheduled_timestamp, 
             order_timestamp: order_order_timestamp, 
             status: order_status, 
-            session: req.sessionID, 
-            multiplier: order_multiplier};
+            session: req.sessionID
+        };
         collection.insertOne(orderItem);
         res.status(201).send('Pedido adicionado com sucesso!');
     });
@@ -48,7 +47,11 @@ exports.addItemToOrder = (req, res, next) => {
         if (err) throw err;
         let db = mongo.conn.db('hangry-test');
         let collection = await db.collection('OrderItem');
-        let orderItem = {order_id: ObjectId(item_order_id), meal_id: ObjectId(item_meal_id), quantity: item_quantity};
+        let orderItem = {
+            order_id: ObjectId(item_order_id), 
+            meal_id: ObjectId(item_meal_id), 
+            quantity: item_quantity
+        };
         collection.insertOne(orderItem);
         res.status(201).send('Item adicionado com sucesso!');
     });
@@ -106,3 +109,6 @@ exports.deleteOrderItem = (req, res, next) => {
         res.status(204).send('Item deletado com sucesso');
     });
 };
+
+
+exports.add

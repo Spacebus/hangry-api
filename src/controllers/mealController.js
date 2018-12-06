@@ -6,12 +6,20 @@ exports.addMeal = (req, res, next) => {
     let meal_name = req.body.name;
     let meal_price = req.body.price;
     let meal_description = req.body.description;
+    let meal_type = req.body.type;
     let meal_image_url = req.body.image;
     mongo.connect(async function(err){
         if (err) throw err;
         let db = mongo.conn.db('hangry-test');
         let collection = await db.collection('Meal');
-        let Meal = {restaurant_id: ObjectId(meal_restaurant_id),name: meal_name, price: meal_price, description: meal_description, image_url: meal_image_url};
+        let Meal = {
+            restaurant_id: ObjectId(meal_restaurant_id),
+            name: meal_name, 
+            price: meal_price, 
+            description: meal_description, 
+            type: meal_type,
+            image_url: meal_image_url
+        };
         collection.insertOne(Meal);
         res.status(201).send('Refeição adicionada com sucesso!');
     });

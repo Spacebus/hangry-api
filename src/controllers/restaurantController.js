@@ -13,7 +13,15 @@ exports.addRestaurant = (req, res, next) => {
         if (err) throw err;
         let db = mongo.conn.db('hangry-test');
         let collection = await db.collection('Restaurant');
-        let Restaurant = {name: restaurant_name, address: restaurant_address, image_url: restaurant_image_url ,phone: restaurant_phone, description: restaurant_description, distance: restaurant_distance, category: restaurant_category};
+        let Restaurant = {
+            name: restaurant_name, 
+            address: restaurant_address, 
+            image_url: restaurant_image_url,
+            phone: restaurant_phone, 
+            description: restaurant_description, 
+            distance: restaurant_distance, 
+            category: restaurant_category
+        };
         collection.insertOne(Restaurant);
         res.status(201).send('Restaurante adicionado com sucesso!');
     });
