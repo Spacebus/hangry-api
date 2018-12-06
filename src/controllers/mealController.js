@@ -7,7 +7,7 @@ exports.addMeal = (req, res, next) => {
     let meal_price = req.body.price;
     let meal_description = req.body.description;
     let meal_type = req.body.type;
-    let meal_image_url = req.body.image;
+    let meal_image_url = req.body.image_url;
     mongo.connect(async function(err){
         if (err) throw err;
         let db = mongo.conn.db('hangry-test');
@@ -31,7 +31,11 @@ exports.addMeals = (req, res, next) => {
         if (err) throw err;
         let db = mongo.conn.db('hangry-test');
         let collection = await db.collection('Meal');
-        meals = await collection.insert(meals);
+        itens = meals.map(meal => {
+            meal.restaurant_id = ObjectId(meal.restaurant_id);
+            return meal;
+        })
+        meals = await collection.insert(itens);
         res.status(201).send(meals.ops);
     });
 };
