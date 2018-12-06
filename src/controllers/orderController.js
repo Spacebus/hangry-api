@@ -6,7 +6,7 @@ exports.addOrder = (req, res, next) => {
     let order_meals = req.body.meals;
     let order_scheduled_timestamp = req.body.scheduled_timestamp;
     let order_order_timestamp = req.body.order_timestamp;
-    let order_status = req.body.status || 'Em processo';
+    let order_status = req.body.status;
     mongo.connect(async function(err){
         if (err) throw err;
         let db = mongo.conn.db('hangry-test');
