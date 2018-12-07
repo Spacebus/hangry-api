@@ -4,8 +4,9 @@ const ObjectId = require('mongodb').ObjectID;
 exports.addOrder = (req, res, next) => {
     let order_restaurant_id = req.body.restaurant_id;
     let order_meals = req.body.meals;
-    let order_scheduled_timestamp = req.body.scheduled_timestamp;
-    let order_order_timestamp = req.body.order_timestamp;
+    let order_from_timestamp = req.body.from_timestamp;
+    let order_to_timestamp = req.body.to_timestamp;
+    let order_total_price = req.body.total_price;
     let order_status = req.body.status;
     mongo.connect(async function(err){
         if (err) throw err;
@@ -14,8 +15,10 @@ exports.addOrder = (req, res, next) => {
         let order_obj = {
             restaurant_id: ObjectId(order_restaurant_id),
             meals: order_meals.map(meal_id => ObjectId(meal_id)),
-            scheduled_timestamp: order_scheduled_timestamp, 
-            order_timestamp: order_order_timestamp, 
+            from_timestamp : order_from_timestamp,
+            to_timestamp: order_to_timestamp,
+            order_timestamp: + new Date(),
+            total_price: order_total_price, 
             status: order_status, 
             session: req.sessionID
         };
