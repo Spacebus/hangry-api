@@ -122,7 +122,7 @@ exports.getAllOrdersFromRestaurantWithoutOneStatus = (req, res, next) => {
         let collection = await db.collection('Order');
         let query = {
             'restaurant_id': ObjectId(id),
-            'status': {'$ne': 'Em processo'}
+            'status': {'$ne': 'Pedindo'}
         };
         let orders = await collection.find(query).toArray();
         res.status(200).send(orders);
