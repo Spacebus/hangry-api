@@ -67,3 +67,15 @@ exports.getAllMeals = (req, res, next) => {
         res.status(200).send(meals);
     });
 };
+
+exports.getMeal = (req, res, next) => {
+    let id = req.params.id;
+    mongo.connect(async function(err){
+        if (err) throw err;
+        let db = mongo.conn.db('hangry-test');
+        let collection = await db.collection('Meal');
+        let query = {"_id": ObjectId(id)};
+        let meal = await collection.findOne(query);
+        res.status(200).send(meal);
+    });
+};

@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/mealController')
 router.get('/', controller.getAllMeals);
+router.get('/:id', controller.getMeal);
 router.post('/', controller.addMeal);
 router.post('/zaga', controller.addMeals);
 router.put('/:id', controller.updateMeal);
