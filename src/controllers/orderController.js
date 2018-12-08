@@ -66,7 +66,7 @@ exports.getAllMealsFromOrder = (req, res, next) => {
         let orderQuery = {"_id": ObjectId(order_id)};
         let order = await orderCollection.findOne(orderQuery);
         let mealCollection = await db.collection('Meal');
-        let mealsQuery = {"_id": {"$in": order.meals}};
+        let mealsQuery = {"_id": {"$in": order.meals.map(meal_id => ObjectId(meal_id))}};
         let meals = await mealCollection.find(mealsQuery).toArray();
         res.status(200).send(meals);
     });
