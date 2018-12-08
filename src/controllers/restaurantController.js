@@ -114,6 +114,22 @@ exports.getAllOrdersFromRestaurant = (req, res, next) => {
     });    
 };
 
+exports.getOrdersByStatus = (req, res, next) => {
+    let id = req.params.id;
+    let order_status = req.body.status;
+    mongo.connect(async function(err){
+        if (err) throw err;
+        let db = mongo.conn.db('hangry-test');
+        let collection = await db.collection('Order');
+        let query = {
+            'restaurant_id': ObjectId(id),
+            'status': {'$eq': order_status}
+        };
+        let orders = await collection.find(query).toArray();
+        res.status(200).send(orders);
+    });
+};
+
 exports.getAllOrdersFromRestaurantWithoutOneStatus = (req, res, next) => {
     let id = req.params.id;
     mongo.connect(async function(err){
