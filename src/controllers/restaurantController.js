@@ -149,6 +149,18 @@ exports.addCheckout = (req, res, next) => {
     });
 };
 
+exports.getRestaurantCheckouts = (req, res, next) => {
+    let id = req.params.id;
+    mongo.connect(async function(err){
+        if (err) throw err;
+        let db = mongo.conn.db('hangry-test');
+        let collection = await db.collection('RestaurantCheckout');
+        let query = {"restaurant_id": ObjectId(id)};
+        checkouts = await collection.find(query).toArray();
+        res.status(200).send(checkouts);
+    });
+};
+
 exports.deleteCheckout = (req, res, next) => {
     let id = req.params.id;
     mongo.connect(async function(err){
