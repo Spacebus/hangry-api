@@ -7,6 +7,7 @@ exports.addOrder = (req, res, next) => {
     let order_from_timestamp = req.body.from_timestamp;
     let order_to_timestamp = req.body.to_timestamp;
     let order_total_price = req.body.total_price;
+    let order_multiplier = req.body.multiplier;
     let order_status = req.body.status;
     mongo.connect(async function(err){
         if (err) throw err;
@@ -18,7 +19,8 @@ exports.addOrder = (req, res, next) => {
             from_timestamp : order_from_timestamp,
             to_timestamp: order_to_timestamp,
             order_timestamp: + new Date(),
-            total_price: order_total_price, 
+            total_price: order_total_price,
+            multiplier: order_multiplier,
             status: order_status, 
             session: req.sessionID
         };
