@@ -128,3 +128,35 @@ exports.getAllOrdersFromRestaurantWithoutOneStatus = (req, res, next) => {
         res.status(200).send(orders);
     });    
 };
+
+exports.addCheckout = (req, res, next) => {
+    let restaurant_id = req.body.restaurant_id;
+    let from = req.body.from;
+    let to = req.body.to;
+    let multiplier = req.body.multiplier || 1;
+    mongo.connect(async function(err){
+        if (err) throw err;
+        let db = mongo.conn.db('hangry-test');
+        let collection = await db.collection('RestaurantCheckout');
+        let checkout_obj = {
+            "restaurant_id": ObjectId(restaurant_id),
+            "from": from,
+            "to": to,
+            "multiplier": multiplier, 
+        };
+        checkout = await collection.insert(checkout_obj);
+        res.status(201).send(checkout.ops[0]._id);
+    });
+};
+
+exports.deleteCheckout = (req, res, next) => {
+    let id = req.params.id;
+    mongo.connect(async function(err){
+        if (err) throw err;
+        let db = mongo.conn.db('hangry-test');
+        let collection = await db.collection('RestaurantCheckout');
+        let query = {"_id": ObjectId(id)};
+        await collection.deleteOne(query);
+        res.status(200).send("Checkout deletado com sucesso");
+    });
+};

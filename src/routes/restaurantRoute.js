@@ -10,4 +10,6 @@ router.post('/zaga', controller.addRestaurants);
 router.get('/:id/getMeals', controller.getAllMealsFromRestaurant);
 router.get('/:id/getOrders', controller.getAllOrdersFromRestaurant);
 router.get('/:id/getFilteredOrders', controller.getAllOrdersFromRestaurantWithoutOneStatus);
+router.post('/checkout', controller.addCheckout);
+router.delete('/checkout/:id', controller.deleteCheckout);
 module.exports = router;
