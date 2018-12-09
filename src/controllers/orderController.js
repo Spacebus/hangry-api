@@ -25,7 +25,7 @@ exports.addOrder = (req, res, next) => {
             session: req.sessionID
         };
         order = await collection.insert(order_obj);
-        res.status(201).send(order.ops[0]._id);
+        res.status(201).send(order);
     });
 };
 
