@@ -9,7 +9,6 @@ exports.addOrder = (req, res, next) => {
     let order_total_price = req.body.total_price;
     let order_multiplier = req.body.multiplier;
     let order_status = req.body.status;
-    let order_session = req.body.session || req.sessionID;
     mongo.connect(async function(err){
         if (err) throw err;
         let db = mongo.conn.db('hangry-test');
@@ -23,7 +22,7 @@ exports.addOrder = (req, res, next) => {
             total_price: order_total_price,
             multiplier: order_multiplier,
             status: order_status, 
-            session: order_session
+            session: req.sessionID
         };
         order = await collection.insert(order_obj);
         res.status(201).send(order);
