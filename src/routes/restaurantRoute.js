@@ -10,7 +10,7 @@ router.post('/zaga', controller.addRestaurants);
 router.get('/:id/getMeals', controller.getAllMealsFromRestaurant);
 router.get('/:id/getOrders', controller.getAllOrdersFromRestaurant);
 router.get('/:id/getFilteredOrders', controller.getAllOrdersFromRestaurantWithoutOneStatus);
-router.get('/:id/getOrdersByStatus', controller.getOrdersByStatus);
+router.get('/:id/getOrdersByStatus/:status', controller.getOrdersByStatus);
 router.get('/:id/getCheckouts', controller.getRestaurantCheckouts);
 router.post('/checkout', controller.addCheckout);
 router.delete('/checkout/:id', controller.deleteCheckout);

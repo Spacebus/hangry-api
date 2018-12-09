@@ -116,7 +116,7 @@ exports.getAllOrdersFromRestaurant = (req, res, next) => {
 
 exports.getOrdersByStatus = (req, res, next) => {
     let id = req.params.id;
-    let order_status = req.body.status;
+    let order_status = req.params.status;
     mongo.connect(async function(err){
         if (err) throw err;
         let db = mongo.conn.db('hangry-test');
